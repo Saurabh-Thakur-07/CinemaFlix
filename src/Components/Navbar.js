@@ -6,7 +6,7 @@ export default class Navbar extends Component{
         return(
             <div className='navbar'>
                 <h1>Movies App</h1>
-                <h3 className='fav-heading'>Favourites</h3>
+                {/* <h3 className='fav-heading'>Favourites</h3> */}
             </div>
         )
     }

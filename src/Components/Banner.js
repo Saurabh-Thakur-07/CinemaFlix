@@ -10,7 +10,7 @@ export default class Banner extends Component {
 
         <div className="banner-card">
         <img src={`https://www.themoviedb.org/t/p/original${movie.backdrop_path}`} className="card-img-top banner-img" alt="..." />
-                <h5 className="card-title banner-title">{movie.original_title}</h5>
+                <h1 className="card-title banner-title">{movie.original_title}</h1>
                 <p className="card-text banner-text">{movie.overview}</p>                
         </div>
     );

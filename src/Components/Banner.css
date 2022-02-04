@@ -21,7 +21,7 @@
 }
 .banner-title{
     position: absolute;
-    top: 48vh;
+    top: 45vh;
     left: 5vw;
 }
 .banner-text{
@@ -31,4 +31,16 @@
     overflow: hidden;
     height: 4.5rem;
     margin-right: 4.5vw;
+}
+@media screen and (max-width: 600px) {
+    .banner-card
+    ,.banner-img{
+        height: 30vh;
+    }
+    .banner-title{
+        top: 12vh;
+    }
+    .banner-text{
+        top: 17vh;
+    }
 }
