@@ -3,6 +3,7 @@
     position: relative;
     height: 70vh;
     color: #fff;
+    margin: 0 auto;
 }
 .banner-img{
     width: 100vw;
@@ -11,7 +12,8 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    border: 1px solid white;
+    /* border: 1px solid white; */
+    z-index: 12;
 }
 .banner-content{
     position: absolute;
