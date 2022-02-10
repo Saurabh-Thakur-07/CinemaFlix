@@ -66,6 +66,7 @@ export default class Movies extends Component {
     this.setState({
       favourites:[...temp]
     })
+    console.log(this.state.favourites);
   }
   handleClick=(value)=>{
     if(this.state.currPage != value){
@@ -75,7 +76,7 @@ export default class Movies extends Component {
     }
   }
   render() {
-      // let movie = movies.results;
+      console.log(this.state.favourites);
     return( 
     <>
         {
@@ -96,7 +97,7 @@ export default class Movies extends Component {
                                 <h5 className="card-title">{movie.original_title}</h5>
                                 {
                                   this.state.hover == movie.id &&
-                                  <a className="btn btn-primary" onClick={()=>this.handleFav(movie)}>{this.state.favourites.includes(movie.id)?"Remove":"Add"}</a>
+                                  <a className="btn btn-primary" onClick={()=>this.handleFav(movie)}>{this.state.favourites.includes(movie.id)?"Remove from favourites":"Add to favourites"}</a>
                                 }
                             </div>
                             </div>

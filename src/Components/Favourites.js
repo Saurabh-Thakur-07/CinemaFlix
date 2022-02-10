@@ -1,38 +1,59 @@
 import React, { Component } from 'react';
 import './Favourites.css'
-import { movies } from './getMovies';
-export default class Favourites extends Component {
+    export default class Favourites extends Component {
     constructor(){
         super();
         this.state={
             genres:[],
-            currGenre:'All Genres'
+            currGenre:'All Genres',
+            movies:[]
         }
     }
+    componentDidMount(){
+        let genreids = {28: 'Action'          ,12: 'Adventure'       ,16: 'Animation'       ,35: 'Comedy'          ,80: 'Crime'           ,99: 'Documentary'     ,18: 'Drama'           ,10751: 'Family'          ,14: 'Fantasy'         ,36: 'History'         ,27: 'Horror'          ,10402: 'Music'           ,9648: 'Mystery'         ,10749: 'Romance'         ,878: 'Science'          ,10770: 'TV'             ,53: 'Thriller'          ,10752: 'War'            ,37: 'Western'         , };
+        let data = JSON.parse(localStorage.getItem('movies') || '[]');
+        let temp = [];
+        data.forEach((movie)=>{
+            if(!temp.includes(genreids[movie.genre_ids[0]]))
+            {
+                temp.push(genreids[movie.genre_ids[0]]);
+            }
+        })
+        temp.unshift('All Genres');
+        // console.log(temp);
+        this.setState({
+            genres:[...temp],
+            movies:[...data]
+        })
+        // console.log(this.state.genres);
+    }
+    handleGenreChange=(genre)=>{
+        this.setState({
+            currGenre: genre
+        })
+    }
     render() {
-            const movie = movies.results;
             let genreids = {28: 'Action'          ,12: 'Adventure'       ,16: 'Animation'       ,35: 'Comedy'          ,80: 'Crime'           ,99: 'Documentary'     ,18: 'Drama'           ,10751: 'Family'          ,14: 'Fantasy'         ,36: 'History'         ,27: 'Horror'          ,10402: 'Music'           ,9648: 'Mystery'         ,10749: 'Romance'         ,878: 'Science'          ,10770: 'TV'             ,53: 'Thriller'          ,10752: 'War'            ,37: 'Western'         , };
-            let temp=[];
-            movies.results.forEach((movie)=>{
-                if(!temp.includes(genreids[movie.genre_ids[0]])){
-                    temp.push(genreids[movie.genre_ids[0]]);
-                }
-            })
-            temp.unshift("All Genres");
-            // this.setState({
-            //     genres:[...temp]
-            // })
-            console.log(temp);
+            console.log(this.state.currGenre);
+            let filterArr = this.state.movies;
+            if(this.state.currGenre!="All Genres"){
+                filterArr = this.state.movies.filter((movieObj)=>genreids[movieObj.genre_ids[0]]==this.state.currGenre)
+            }
+            // else{
+            //     filterArr = this.state.movies.filter((movie)=>{
+            //         genreids[movie.genre_ids[0]] == this.state.currGenre;
+            //     })
+            // }
             return(
              <div>
             <div className='row favourites-page'>
                 <div className='col-3 genres-list'>
                     <ul class="list-group">
                         {
-                            temp.map((genre)=>(
+                            this.state.genres.map((genre)=>(
                                 this.state.currGenre == genre ? 
                                 <li class="list-group-item winner">{genre}</li>:
-                                <li class="list-group-item loser">{genre}</li>
+                                <li class="list-group-item loser" onClick={()=>this.handleGenreChange(genre)}>{genre}</li>
                             ))
                         }
                     </ul>
@@ -59,7 +80,7 @@ export default class Favourites extends Component {
                                     </thead>
                                     <tbody>
                                         {
-                                            movie.map((movie)=>(
+                                            filterArr.map((movie)=>(
                                                 <tr>
                                                     <td><img className='fav-img' src={`https://www.themoviedb.org/t/p/original${movie.backdrop_path}`} alt=''></img> {movie.original_title}</td>
                                                     <td>{genreids[movie.genre_ids[0]]}</td>
@@ -85,6 +106,6 @@ export default class Favourites extends Component {
                 </div>
             </div>
         </div>
-    )                
+    );             
   }
 }
