@@ -10,7 +10,12 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Switch>
-            <Route path='/' exact component={Movies}/>
+            <Route path='/' exact render={(props)=>(
+              <>
+                <Banner {...props} />
+                <Movies {...props} />
+              </>
+            )} />
             <Route path='/favourites' component={Favourites}/>
         </Switch>
         {/* <Banner />

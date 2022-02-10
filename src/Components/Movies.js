@@ -10,7 +10,8 @@ export default class Movies extends Component {
             hover:'',
             parr:[1],
             currPage:1,
-            movies:[]
+            movies:[],
+            favourites:[]
       }
   }
   async componentDidMount(){
@@ -45,6 +46,27 @@ export default class Movies extends Component {
         },this.changeMovies)
     }
   }
+  handleFav=(movie)=>{
+    let oldData = JSON.parse(localStorage.getItem('movies') || '[]');
+    if(this.state.favourites.includes(movie.id)){
+      // removing the movie if it already contains it
+      oldData = oldData.filter((m)=>m.id!=movie.id)
+    }
+    else{
+      //then we have to add it
+      oldData.push(movie);
+    }
+    localStorage.setItem('movies',JSON.stringify(oldData));
+    console.log(oldData);
+    this.handleFavState();
+  }
+  handleFavState=()=>{
+    let oldData = JSON.parse(localStorage.getItem('movies') || '[]');
+    let temp = oldData.map((movie)=>movie.id);
+    this.setState({
+      favourites:[...temp]
+    })
+  }
   handleClick=(value)=>{
     if(this.state.currPage != value){
       this.setState({
@@ -74,7 +96,7 @@ export default class Movies extends Component {
                                 <h5 className="card-title">{movie.original_title}</h5>
                                 {
                                   this.state.hover == movie.id &&
-                                  <a className="btn btn-primary">Add to Favourites</a>
+                                  <a className="btn btn-primary" onClick={()=>this.handleFav(movie)}>{this.state.favourites.includes(movie.id)?"Remove":"Add"}</a>
                                 }
                             </div>
                             </div>
